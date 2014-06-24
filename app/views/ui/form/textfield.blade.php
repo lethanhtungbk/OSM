@@ -1,0 +1,10 @@
+<div class="form-group">
+    <label class="col-md-3 control-label">{{$field['desc']}}</label>
+    <div class="col-md-4">
+        @if (array_key_exists('value',$field))
+        <input type="text" class="form-control" placeholder="{{array_key_exists('holder',$field)?$field['holder']:'' }}" name='{{$field['name']}}' value="{{$field['value']}}"/>
+        @else
+        <input type="text" class="form-control" placeholder="{{array_key_exists('holder',$field)?$field['holder']:'' }}" name='{{$field['name']}}'/>
+        @endif
+    </div>
+</div>
