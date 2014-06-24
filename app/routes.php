@@ -16,8 +16,4 @@ Route::get('/', 'HomeController@showWelcome');
 Route::controller('setting','SettingController');
 Route::controller('universities','UniversityController');
 Route::controller('account','AccountController');
-Route::get('/test',function()
-{
-    return View::make('test');
-});
-
+Route::controller('object','ObjectController');

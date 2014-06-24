@@ -55,16 +55,11 @@
                 </ul>
             </li>
             <li >
-                <a href="javascript:;">
+                <a href="{{URL::to('/object/object/1')}}">
                     <i class="icon-rocket"></i>
                     <span class="title">Universities </span>
                     <span class="arrow "></span>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a href="layout_horizontal_sidebar_menu.html"> Add new</a>
-                    </li>                    
-                </ul>
+                </a>                
             </li>            
         </ul>
         <!-- END SIDEBAR MENU -->
