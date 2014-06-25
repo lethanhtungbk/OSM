@@ -3,7 +3,7 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr >
-                <th><input type="checkbox" id="chbAll"/></th>
+                <th><input type="checkbox" id="chbAll" onclick="checkAllInTable(this, 'checked-to-remove')"/></th>
                 @if ($data != null && $data->columns != null)
                 @foreach ($data->columns as $col)
                 <th>{{$col['desc']}}</th>
@@ -16,7 +16,7 @@
             @if ($data != null && $data->columns != null && $data->records != null)
             @foreach ($data->records as $row)
             <tr>
-                <td class="table-column-id"><input type="checkbox"/></td>     
+                <td class="table-column-id"><input type="checkbox" class="checked-to-remove"/></td>     
                 
                     @foreach ($data->columns as $col)
                     

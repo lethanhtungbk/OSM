@@ -141,6 +141,7 @@ License: You must have a valid license purchased only from themeforest(the above
         {{HTML::script('assets/global/scripts/metronic.js')}}
         {{HTML::script('assets/admin/layout/scripts/layout.js')}}
         {{HTML::script('assets/admin/layout/scripts/quick-sidebar.js')}}
+        {{HTML::script('assets/global/scripts/utils.js')}}
         @section('custom-plugin')
         @show
         <script>
