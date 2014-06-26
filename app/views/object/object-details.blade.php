@@ -3,11 +3,11 @@
 @section('content')
 <div class="portlet box blue">
     <div class="portlet-title">
-        <div class="caption">Add new field</div>        
+        <div class="caption">{{$pageData->data->caption}}</div>        
     </div>
     <div class="portlet-body form">
         <!-- BEGIN FORM-->
-        {{ Form::open(array('url' => $pageData->data->save,'class' => 'form-horizontal' , 'method' => 'post')) }}
+        {{ Form::open(array('url' => $pageData->data->action,'class' => 'form-horizontal' , 'method' => 'post')) }}
         <div class="form-body">
             @if ($pageData->data != null)
             @foreach ($pageData->data->fields as $field)
@@ -18,7 +18,6 @@
        @if ($errors->any())
         <div>
             <label class="col-md-3 control-label">{{ implode('', $errors->all('<li class="error">:message</li>')) }}</label>
-            
         </div>
         @endif      
         <div class="form-actions fluid">
@@ -29,15 +28,6 @@
         </div>
         {{Form::close()}}
         <!-- END FORM-->
-
-
     </div>
 </div>
-@stop
-
-@section('custom-script')
-@parent
-$( "#cboFieldTypes" ).change(function() {
-  alert( "Handler for .change() called." );
-});
 @stop
