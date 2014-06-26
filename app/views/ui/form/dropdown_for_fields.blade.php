@@ -9,13 +9,7 @@
         </select>
     </div>
 </div>
-<div class="form-group">
-    <label class="col-md-3 control-label"></label>
-    <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Add value">
-    </div>
-    <div class="col-md-1">
-        <a id="sample_editable_1_new" class="btn green"><i class="fa fa-plus"></i></a>
-        <a id="sample_editable_1_new" class="btn green"><i class="fa fa-minus"></i></a>
-    </div>
+<div id='extraValue'>
+    @include('ui.form.extra-value')
 </div>
+

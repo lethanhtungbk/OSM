@@ -37,7 +37,34 @@
 
 @section('custom-script')
 @parent
-$( "#cboFieldTypes" ).change(function() {
-  alert( "Handler for .change() called." );
+$('#cboFieldTypes').change(function() 
+{
+    var val = parseInt($('#cboFieldTypes').val());
+    switch (val)
+    {
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            $('#extraValue').show(); 
+            break;
+        default:
+            $('#extraValue').hide(); 
+            break;
+    }
 });
+    
+
+
+function onAddValue()
+{
+    var test = "@include('ui.form.extra-value')";
+    $('#extraValue').append(test);
+}
+
+function onRemoveValue()
+{
+    
+}
 @stop
+

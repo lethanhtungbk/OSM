@@ -163,6 +163,28 @@ class SettingController extends BaseController {
         return View::make('setting.fields-add', array('pageData' => $pageData));
     }
     
+    public function postFieldGroupsSave()
+    {
+        $input = Input::all();
+        
+        $group = new Groups();
+        $group->name = $input['name'];
+        $group->save();
+        
+        $groupId = $group->id;
+        
+        
+        foreach ($input['fields'] as $fieldId)
+        {
+            $groupField = new GroupFields();
+            $groupField->group_id = $groupId;
+            $groupField->field_id = $fieldId;            
+            $groupField->save();                    
+        }      
+        
+        return $this->getFieldGroups();
+    }
+    
     public function getFieldGroupsEdit($id)
     {
         $pageData = new PageData();
@@ -192,6 +214,8 @@ class SettingController extends BaseController {
 
         return View::make('setting.fields-add', array('pageData' => $pageData));
     }
+    
+  
     
     public function postFieldGroupsUpdate()
     {

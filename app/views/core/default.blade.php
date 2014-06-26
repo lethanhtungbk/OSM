@@ -56,7 +56,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
     <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
     <body class="page-header-fixed page-quick-sidebar-over-content page-header-fixed-mobile page-footer-fixed1">
-        <?php echo View::make('core.body-header-menu') ?>
+        @include('core.body-header-menu')
         <!-- BEGIN CONTAINER -->
         <div class="page-container">
             <!-- BEGIN SIDEBAR -->
@@ -107,7 +107,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 </div>
             </div>
             <!-- END CONTENT -->
-            <?php echo View::make('core.body-quick-side-bar') ?>
+            @include('core.body-quick-side-bar')
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN FOOTER -->
