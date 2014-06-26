@@ -26,8 +26,7 @@ class ObjectController extends BaseController {
             array('desc' => 'Id', 'ui' => 'textfield', 'name' => 'id', 'value'=>$object->id), //
             array('desc' => 'Group', 'ui' => 'textfield', 'name' => 'group_name', 'value' => $object->group_name), //
             array('desc' => 'Object', 'ui' => 'textfield', 'name' => 'object_name', 'value' => $object->object_name), //
-        );
-        var_dump($object);
+        );        
         $pageData->data->action = URL::to('object/save');
         $pageData->data->back = URL::to('object/object/');
         $pageData->data->caption = 'Edit Object details';
