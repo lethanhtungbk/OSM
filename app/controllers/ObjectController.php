@@ -3,16 +3,14 @@ class ObjectController extends BaseController {
     
     public function getObject($id) {        
         $object = Object::where('group_id', '=', $id)->get();
-
         $pageData = new PageData();
         $pageData->data = new stdClass();
         $pageData->data->columns = DBColumns::getColumMap('field-types');
         $pageData->data->records = $object;
         $pageData->data->edit = URL::to('object/edit');
-        $pageData->data->remove = URL::to('object/remote');
+        $pageData->data->delete = URL::to('object/remove/'.$id);
         $pageData->data->top_action = array(
             array('url' => URL::to('object/add'), 'label'=>'New Object', 'class'=>'fa-plus'),
-            array('url' => URL::to('object/remove'), 'label'=>'Remove', 'class'=>'fa-minus'),
         );
         return View::make('object.list', array('pageData' => $pageData));
     }
@@ -44,7 +42,14 @@ class ObjectController extends BaseController {
         }
         return Redirect::to('object/object/'.$input['group_id']);
     }
-    
+    public function getRemove($groupId,$id) {
+        $object=Object::find($id);
+        if (isset($object)) {
+            $object->delete();
+        }
+        return Redirect::to('object/object/'.$groupId);
+    }
+            
     private function createObjectForm($object) {
         $groups = Groups::lists('name','id');
         $pageData = new PageData();
