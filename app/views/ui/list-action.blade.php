@@ -1,10 +1,11 @@
 <div class="table-toolbar">
     <div class="btn-group">
-        <a id="sample_editable_1_new" class="btn green" href="{{$add}}">
-            Add New <i class="fa fa-plus"></i>
-        </a>
-        <a id="sample_editable_1_new" class="btn blue" href="{{URL::to('setting/field-types-add')}}">
-            Remove <i class="fa fa-plus"></i>
-        </a>
+        @if (isset($pageData->data->top_action)) 
+            @foreach ($pageData->data->top_action as $an_action)
+                <a id="sample_editable_1_new" class="btn green" href="{{$an_action['url']}}">
+                    {{$an_action['label']}} <i class="fa {{$an_action['class']}"></i>
+                </a>
+            @endforeach
+        @endif
     </div>
 </div>

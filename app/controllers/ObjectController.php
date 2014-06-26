@@ -1,5 +1,6 @@
 <?php
 class ObjectController extends BaseController {
+    
     public function getObject($id) {        
         $object = Object::where('group_id', '=', $id)->get();
 
@@ -7,9 +8,12 @@ class ObjectController extends BaseController {
         $pageData->data = new stdClass();
         $pageData->data->columns = DBColumns::getColumMap('field-types');
         $pageData->data->records = $object;
-        $pageData->data->add = URL::to('object/add');
         $pageData->data->edit = URL::to('object/edit');
         $pageData->data->remove = URL::to('object/remote');
+        $pageData->data->top_action = array(
+            array('url' => URL::to('object/add'), 'label'=>'New Object', 'class'=>'fa-plus'),
+            array('url' => URL::to('object/remove'), 'label'=>'Remove', 'class'=>'fa-minus'),
+        );
         return View::make('object.list', array('pageData' => $pageData));
     }
     public function getEdit($id) { //get -> GET Method, Edit -> edit in URL
