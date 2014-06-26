@@ -62,9 +62,9 @@ function onAddValue()
     $('#extraValue').append(test);
 }
 
-function onRemoveValue()
+function onRemoveValue(element)
 {
-    
+    $(element).closest(".form-group").remove()
 }
 @stop
 

@@ -7,7 +7,7 @@
     </div>
     <div class="portlet-body form">
         <!-- BEGIN FORM-->
-        {{ Form::open(array('url' => $pageData->data->action,'class' => 'form-horizontal' , 'method' => 'post')) }}
+        {{ Form::open(array('url' => $pageData->data->save,'class' => 'form-horizontal' , 'method' => 'post')) }}
         <div class="form-body">
             @if ($pageData->data != null)
             @foreach ($pageData->data->fields as $field)
