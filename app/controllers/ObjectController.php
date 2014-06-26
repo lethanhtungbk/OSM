@@ -1,6 +1,5 @@
 <?php
 class ObjectController extends BaseController {
-    
     public function getObject($id) {        
         $object = Object::where('group_id', '=', $id)->get();
 
@@ -13,23 +12,58 @@ class ObjectController extends BaseController {
         $pageData->data->remove = URL::to('object/remote');
         return View::make('object.list', array('pageData' => $pageData));
     }
-    public function getEdit($id) { //get -> GET Method, Edit -> edit in URL        
-        $object = DB::table('sa__objects')
+    public function getEdit($id) { //get -> GET Method, Edit -> edit in URL
+        $object = DB::table('sa__objects')        
             ->join('sa__groups', 'sa__objects.group_id', '=', 'sa__groups.id')            
-            ->select('sa__objects.id', 'sa__groups.name as group_name', 'sa__objects.name as object_name')
+            ->select('sa__objects.id', 'sa__groups.id as group_id', 'sa__objects.name as object_name')
             ->where('sa__objects.id', '=', $id)
-            ->first();
+            ->first();        
+        return $this->createObjectForm($object);
+    }
+    
+    public function getAdd() {
+        return $this->createObjectForm(null);
+    }
+    public function postSave() {
+        $input = Input::all();
+        $id = $input['id'];
+        $action = $input['action'];
         
+        if ($action=='Edit') {
+            $object = Object::find($id);
+            $object->name = $input['object_name'];
+            $object->save();
+        }else if ($action=='AddNew') {
+            Object::insert(
+                    array('id' => $input['id'], 'group_id'=>$input['group_id'], 'name' => $input['object_name'])
+            );
+        }
+        return Redirect::to('object/object/'.$input['group_id']);
+    }
+    
+    private function createObjectForm($object) {
+        $groups = Groups::lists('name','id');
         $pageData = new PageData();
         $pageData->data = new stdClass();
-        $pageData->data->fields = array(
-            array('desc' => 'Id', 'ui' => 'textfield', 'name' => 'id', 'value'=>$object->id), //
-            array('desc' => 'Group', 'ui' => 'textfield', 'name' => 'group_name', 'value' => $object->group_name), //
-            array('desc' => 'Object', 'ui' => 'textfield', 'name' => 'object_name', 'value' => $object->object_name), //
-        );        
+        if (isset($object)) {
+            $pageData->data->fields = array(
+                array('desc' => 'Id', 'ui' => 'textfield', 'name' => 'id', 'value'=>$object->id), //
+                array('desc' => 'Group', 'ui' => 'dropdown', 'name' => 'group_id', 'value' => $groups, 'selected' =>$object->group_id), //
+                array('desc' => 'Object', 'ui' => 'textfield', 'name' => 'object_name', 'value' => $object->object_name), //
+            );
+            $pageData->data->action = 'Edit';
+            $pageData->data->caption = 'Edit Object details';
+        } else {
+            $pageData->data->fields = array(
+                array('desc' => 'Id', 'ui' => 'textfield', 'name' => 'id'), //
+                array('desc' => 'Group', 'ui' => 'dropdown', 'name' => 'group_id', 'value' => $groups), //
+                array('desc' => 'Object', 'ui' => 'textfield', 'name' => 'object_name'), //
+            );
+            $pageData->data->action = 'AddNew';
+            $pageData->data->caption = 'Add new Object';
+        }
         $pageData->data->save = URL::to('object/save');
         $pageData->data->back = URL::to('object/object/');
-        $pageData->data->caption = 'Edit Object details';
         return View::make('object.object-details', array('pageData' => $pageData));
     }
 }

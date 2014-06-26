@@ -115,7 +115,7 @@ class SettingController extends BaseController {
         $pageData->data->fields = array(
             array('desc' => 'Field Name', 'ui' => 'textfield', 'name' => 'name'),
             array('desc' => 'Field Code', 'ui' => 'textfield', 'name' => 'code'),
-            array('desc' => 'Field Type', 'ui' => 'dropdown_for_fields', 'name' => 'field_type_id', 'value' => FieldTypes::lists('name','id')),
+            array('desc' => 'Field Type', 'ui' => 'dropdown', 'name' => 'field_type_id', 'value' => FieldTypes::lists('name','id')),
         );
         
         $pageData->data->save = URL::to('setting/fields-save');

@@ -15,7 +15,8 @@
             @endforeach
             @endif            
         </div>
-       @if ($errors->any())
+        <input type="hidden" name="action" value="{{$pageData->data->action}}"/>
+        @if ($errors->any())
         <div>
             <label class="col-md-3 control-label">{{ implode('', $errors->all('<li class="error">:message</li>')) }}</label>
         </div>

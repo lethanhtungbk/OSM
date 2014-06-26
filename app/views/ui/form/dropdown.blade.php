@@ -3,7 +3,11 @@
     <div class="col-md-4">
         <select class="form-control" name='{{$field['name']}}'>
             @foreach ($field['value'] as $key => $value)
-            <option value='{{$key}}'>{{$value}}</option>
+                @if (isset($field['selected']) && $field['selected']==$key)
+                    <option value='{{$key}}' selected="true">{{$value}}</option>
+                @else
+                    <option value='{{$key}}'>{{$value}}</option>
+                @endif
             @endforeach
         </select>
     </div>

@@ -4,7 +4,11 @@
         <select class="form-control" name='{{$field['name']}}' id='cboFieldTypes'>
             <option value='0'>Select field type</option>
             @foreach ($field['value'] as $key => $value)
-            <option value='{{$key}}'>{{$value}}</option>
+            @if (isset($field['selected']) && $field['selected']==$key)
+                <option value='{{$key}}' selected="true">{{$value}}</option>
+            @else
+                <option value='{{$key}}'>{{$value}}</option>
+            @endif
             @endforeach
         </select>
     </div>
