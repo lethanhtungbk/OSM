@@ -10,6 +10,12 @@ class SettingController extends BaseController {
         $pageData->data->columns = DBColumns::getColumMap('field-types');
         $pageData->data->records = $fields;
         $pageData->data->add = URL::to('setting/field-types-add');
+        
+        $pageData->data->top_action = array(
+            array('url' => URL::to('setting/field-types-add'), 'label'=>'New field type', 'class'=>'fa-plus'),
+            array('url' => URL::to('setting/field-types'), 'label'=>'Remove', 'class'=>'fa-minus'),
+        );
+        
         $pageData->data->edit = URL::to('setting/field-types-edit');
         $pageData->data->remove = URL::to('setting/field-types-remove');
         return View::make('setting.fields', array('pageData' => $pageData));
@@ -98,6 +104,12 @@ class SettingController extends BaseController {
         $pageData->data->columns = DBColumns::getColumMap('fields');
         $pageData->data->records = $fields;
         $pageData->data->add = URL::to('setting/fields-add');
+        
+        $pageData->data->top_action = array(
+            array('url' => URL::to('setting/fields-add'), 'label'=>'New field', 'class'=>'fa-plus'),
+            array('url' => URL::to('setting/fields'), 'label'=>'Remove', 'class'=>'fa-minus'),
+        );
+        
         $pageData->data->edit = URL::to('setting/fields-edit');
         $pageData->data->remove = URL::to('setting/fields-remove');
 
@@ -115,7 +127,7 @@ class SettingController extends BaseController {
         $pageData->data->fields = array(
             array('desc' => 'Field Name', 'ui' => 'textfield', 'name' => 'name'),
             array('desc' => 'Field Code', 'ui' => 'textfield', 'name' => 'code'),
-            array('desc' => 'Field Type', 'ui' => 'dropdown', 'name' => 'field_type_id', 'value' => FieldTypes::lists('name','id')),
+            array('desc' => 'Field Type', 'ui' => 'dropdown_for_fields', 'name' => 'field_type_id', 'value' => FieldTypes::lists('name','id')),
         );
         
         $pageData->data->save = URL::to('setting/fields-save');
@@ -140,8 +152,11 @@ class SettingController extends BaseController {
         $pageData = new PageData();
         $pageData->data = new stdClass();
         $pageData->data->columns = DBColumns::getColumMap('groups');
-        $pageData->data->records = $fields;
-        $pageData->data->add = URL::to('setting/field-groups-add');
+        $pageData->data->records = $fields; 
+        $pageData->data->top_action = array(
+            array('url' => URL::to('setting/field-groups-add'), 'label'=>'New field', 'class'=>'fa-plus'),
+            array('url' => URL::to('setting/field-groups'), 'label'=>'Remove', 'class'=>'fa-minus'),
+        );
         $pageData->data->edit = URL::to('setting/field-groups-edit');
         $pageData->data->remove = URL::to('setting/field-groups-remove');
         return View::make('setting.fields', array('pageData' => $pageData));

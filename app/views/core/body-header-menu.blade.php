@@ -143,7 +143,7 @@
                                         <li>
                                             <a href="inbox.html?a=view">
                                                 <span class="photo">
-                                                    <img src="{{asset('assets/admin/layout/img/avatar2.jpg')}}" alt=""/>
+                                                    {{HTML::image('assets/admin/layout/img/avatar2.jpg')}}
                                                 </span>
                                                 <span class="subject">
                                                     <span class="from">
@@ -158,7 +158,7 @@
                                         <li>
                                             <a href="inbox.html?a=view">
                                                 <span class="photo">
-                                                    <img src="{{asset('assets/admin/layout/img/avatar3.jpg')}}" alt=""/>
+                                                    {{HTML::image('assets/admin/layout/img/avatar3.jpg')}}
                                                 </span>
                                                 <span class="subject">
                                                     <span class="from">
@@ -173,7 +173,7 @@
                                         <li>
                                             <a href="inbox.html?a=view">
                                                 <span class="photo">
-                                                    <img src="{{asset('assets/admin/layout/img/avatar1.jpg')}}" alt=""/>
+                                                    {{HTML::image('assets/admin/layout/img/avatar1.jpg')}}
                                                 </span>
                                                 <span class="subject">
                                                     <span class="from">
@@ -188,7 +188,7 @@
                                         <li>
                                             <a href="inbox.html?a=view">
                                                 <span class="photo">
-                                                    <img src="{{asset('assets/admin/layout/img/avatar2.jpg')}}" alt=""/>
+                                                    {{HTML::image('assets/admin/layout/img/avatar2.jpg')}}
                                                 </span>
                                                 <span class="subject">
                                                     <span class="from">
@@ -203,7 +203,7 @@
                                         <li>
                                             <a href="inbox.html?a=view">
                                                 <span class="photo">
-                                                    <img src="{{asset('assets/admin/layout/img/avatar3.jpg')}}" alt=""/>
+                                                    {{HTML::image('assets/admin/layout/img/avatar3.jpg')}}
                                                 </span>
                                                 <span class="subject">
                                                     <span class="from">
@@ -365,7 +365,7 @@
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown dropdown-user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img alt="" class="img-circle" src="{{asset('assets/admin/layout/img/avatar3_small.jpg')}}"/>
+                                {{HTML::image('assets/admin/layout/img/avatar3_small.jpg','',array('class' => 'img-circle'))}}
                                 <span class="username">
                                     Bob </span>
                                 <i class="fa fa-angle-down"></i>

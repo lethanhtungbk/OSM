@@ -87,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                     <!-- /.modal -->
                     <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-                    <?php echo View::make('core.body-style-customize') ?>
+                    @include('core.body-style-customize')
                     <!-- BEGIN PAGE HEADER-->
                     <div class="row">
                         <div class="col-md-12">

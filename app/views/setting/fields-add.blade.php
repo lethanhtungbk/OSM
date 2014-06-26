@@ -56,15 +56,17 @@ $('#cboFieldTypes').change(function()
     
 
 
-function onAddValue()
+function onAddValue(element)
 {
     var test = "@include('ui.form.extra-value')";
-    $('#extraValue').append(test);
+    $(element).closest(".form-group").after(test);
+    //$('#extraValue').append(test);
 }
 
 function onRemoveValue(element)
 {
-    $(element).closest(".form-group").remove()
+    if ($('#extraValue').find('div.form-group').length > 1) 
+        $(element).closest(".form-group").remove()
 }
 @stop
 
