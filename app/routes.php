@@ -14,5 +14,5 @@
 
 Route::get('/', 'HomeController@showWelcome');
 Route::controller('setting','SettingController');
-Route::controller('account','AccountController');
 Route::controller('object','ObjectController');
+Route::controller('entity','EntityController');

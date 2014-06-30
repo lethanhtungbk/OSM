@@ -1,7 +1,6 @@
 <?php
-class ObjectController extends BaseController {
-    
-    public function getObject($id) {        
+class ObjectController extends \BaseController {
+    public function getObject($id) {
         $object = Object::where('group_id', '=', $id)->get();
         $pageData = new PageData();
         $pageData->data = new stdClass();
