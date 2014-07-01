@@ -14,10 +14,15 @@
         <tbody>
             @if ($data != null && $data->columns != null && $data->records != null)
             @foreach ($data->records as $row)
+            <?php $col_no=0; ?>
             <tr>
                 @foreach ($data->columns as $col)
-                    @if (!empty($row->$col['name']))                   
-                    <td>{{ $row->$col['name'] }}</td>
+                    @if (!empty($row->$col['name']))
+                        @if ($col_no==0)
+                        <td><a href="{{URL::to('/entity/entity/'.$row->id)}}">{{ $row->$col['name'] }}</a></td>
+                        @else
+                            <td>{{ $row->$col['name'] }}</td>
+                        @endif
                     @endif
                 @endforeach
                 <td class="table-column-action">

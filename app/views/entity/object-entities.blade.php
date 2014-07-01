@@ -3,17 +3,23 @@
 @section('content')
 <div class="portlet box blue">
     <div class="portlet-title">
-        <div class="caption">{{$pageData->data->caption}}</div>        
+        <div class="caption">{{$pageData->caption}}</div>        
     </div>
     <div class="portlet-body form">
+        @if (isset($pageData->entities))
         <table class="table">
-            @foreach ($pageData->data->entities as $row)
+            @foreach ($pageData->entities as $row)
             <tr >
                 <td>{{$row->field_name}}</td>
-                <td>{{$row->value}}</td>
+                @if(isset($row->field_value))
+                    <td>{{implode (',', $row->field_value)}}</td>
+                @else
+                    <td>&nbsp;</td>
+                @endif
             </tr>
             @endforeach
         </table>
+        @endif
     </div>
 </div>
 @stop
