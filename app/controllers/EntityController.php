@@ -20,21 +20,46 @@ class EntityController extends \BaseController {
                 ->join('sa__fields as sf', 'sgf.field_id', '=', 'sf.id')
                 ->join('sa__field_types as sft', 'sf.id', '=', 'sft.id')
                 ->where('sgf.group_id','=', $group_id )
-                ->select('sgf.group_id as group_id', 'sf.id as field_id', 'sf.name as field_name', 'sf.code as field_code', 'sft.uic as field_type_code')
+                ->select('sgf.group_id as group_id', 'sf.id as field_id', 'sf.name as field_name', 'sf.code as field_code', 'sft.uic as field_type_code', 'sft.is_multi_option as is_multi_option')
                 ->get();
+            
             $entities = array();
+            $availValues = AvailableFieldValue::all();
             
             foreach ($groupFields as $field) {
                 $entities[$field->field_type_code] = new stdClass();
                 $entities[$field->field_type_code]->field_type = $field->field_type_code;
                 $entities[$field->field_type_code]->field_name = $field->field_name;
-                $entities[$field->field_type_code]->field_value = array();
+                
+                $field_value = array();
                 foreach ($entities_data as $data) {
                     if ($data->field_id == $field->field_id) {
-                        $entities[$field->field_type_code]->field_value[] = $data->field_value;
+                        $field_value[] = $data->field_value;
                     }
                 }
+                if ($field->is_multi_option!==0) { //load available option
+                    $option = array();
+                    foreach($availValues as $availValue) {
+                        if ($availValue->field_id==$field->field_id) {
+                            $aValue = new stdClass();
+                            $aValue->key = $availValue->id;
+                            $aValue->value = $availValue->value;
+                            $option[] = $aValue;
+                        }
+                    }
+                    var_dump($option);
+                    $entities[$field->field_type_code]->fields = 
+                            array('desc' => $field->field_name, 'ui' => $field->field_type_code, 'name' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
+                }
+                /*
+                else {
+                    $entities[$field->field_type_code]->fields = array('desc' => 'Id', 'ui' => $field->field_type_code, 'name' => 'id', 'value'=>$object->id);
+                }
+                 */
+                 
+                
             }
+            
             $pageData = new PageData();
             $pageData->entities = $entities;
             $pageData->caption = $object->name;

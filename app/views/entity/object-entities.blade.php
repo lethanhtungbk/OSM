@@ -10,12 +10,21 @@
         <table class="table">
             @foreach ($pageData->entities as $row)
             <tr >
-                <td>{{$row->field_name}}</td>
-                @if(isset($row->field_value))
-                    <td>{{implode (',', $row->field_value)}}</td>
-                @else
-                    <td>&nbsp;</td>
-                @endif
+                <td style="width: 50%">{{$row->field_name}}</td>
+                <td style="width: 50%">
+                    <span class="show-value-cell">
+                    @if(isset($row->field_value))
+                        {{implode (',', $row->field_value)}}
+                    @else
+                        &nbsp;
+                    @endif
+                    </span>
+                    <span class="hide">
+                        @if (isset($row->fields))
+                            @include('ui.form.'.$row->fields['ui'], array('field' => $row->fields))
+                        @endif
+                    </span>
+                </td>
             </tr>
             @endforeach
         </table>
