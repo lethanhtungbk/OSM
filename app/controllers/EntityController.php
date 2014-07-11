@@ -44,15 +44,12 @@ class EntityController extends \BaseController {
                             $option[$availValue->id] = $availValue->value;
                         }
                     }
-                    var_dump($option);
                     $entities[$field->field_type_code]->fields = 
                             array('ui' => $field->field_type_code, 'name' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
                 } else {
                     $entities[$field->field_type_code]->fields = array('ui' => $field->field_type_code, 'name' => 'id', 'value'=>$object->id);
                 }
-
-                $entities[$field->field_type_code]->field_value = $field_value;                                  
-                
+                $entities[$field->field_type_code]->field_value = $field_value;
             }
             
             $pageData = new PageData();
