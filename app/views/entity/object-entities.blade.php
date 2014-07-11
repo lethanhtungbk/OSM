@@ -31,7 +31,7 @@
             @endforeach
         </table>
         @endif
-        <div class="button-container center hide">
+        <div class="button-container text-center hide">
             <a href="#" class="btn green">Save <i class="fa"></i></a>
             <a href="#" class="btn green">Cancel <i class="fa"></i></a>
         </div>
