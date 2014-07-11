@@ -1,5 +1,7 @@
+@if (isset($field['desc']))
 <div class="form-group">
     <label class="col-md-3 control-label">{{$field['desc']}}</label>
+@endif
     <div class="col-md-4">
         <select class="form-control" name='{{$field['name']}}' id='cboFieldTypes'>
             <option value='0'>Select field type</option>
@@ -12,7 +14,9 @@
             @endforeach
         </select>
     </div>
+@if (isset($field['desc']))
 </div>
+@endif
 <div id='extraValue'>
     @include('ui.form.extra-value')
 </div>

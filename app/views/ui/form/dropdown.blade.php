@@ -1,5 +1,7 @@
+@if (isset($field['desc']))
 <div class="form-group">
     <label class="col-md-3 control-label">{{$field['desc']}}</label>
+@endif
     <div class="col-md-4">
         <select class="form-control" name='{{$field['name']}}'>
             @foreach ($field['value'] as $key => $value)
@@ -11,4 +13,6 @@
             @endforeach
         </select>
     </div>
+@if (isset($field['desc']))
 </div>
+@endif

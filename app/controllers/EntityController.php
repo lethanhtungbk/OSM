@@ -34,29 +34,26 @@ class EntityController extends \BaseController {
                 $field_value = array();
                 foreach ($entities_data as $data) {
                     if ($data->field_id == $field->field_id) {
-                        $field_value[] = $data->field_value;
+                        $field_value[] = trim($data->field_value);
                     }
                 }
                 if ($field->is_multi_option!==0) { //load available option
                     $option = array();
                     foreach($availValues as $availValue) {
                         if ($availValue->field_id==$field->field_id) {
-                            $aValue = new stdClass();
-                            $aValue->key = $availValue->id;
-                            $aValue->value = $availValue->value;
-                            $option[] = $aValue;
+                            $option[$availValue->id] = $availValue->value;
                         }
                     }
                     var_dump($option);
                     $entities[$field->field_type_code]->fields = 
-                            array('desc' => $field->field_name, 'ui' => $field->field_type_code, 'name' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
+                            array('ui' => $field->field_type_code, 'name' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
                 }
                 /*
                 else {
                     $entities[$field->field_type_code]->fields = array('desc' => 'Id', 'ui' => $field->field_type_code, 'name' => 'id', 'value'=>$object->id);
                 }
                  */
-                 
+                $entities[$field->field_type_code]->field_value = $field_value;                                  
                 
             }
             
