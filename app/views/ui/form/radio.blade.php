@@ -1,16 +1,21 @@
+@if (isset($field['desc']))
 <div class="form-group">
-    <label class="col-md-3 control-label">Radio</label>
+    <label class="col-md-3 control-label">{{$field['desc']}}</label>
+@endif
     <div class="col-md-9">
         <div class="radio-list">
+            @foreach ($field['value'] as $key => $value)
+            @if (isset($field['selected']) && $field['selected']==$key)
             <label class="radio-inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios4" value="option1" checked> Option 1 </label>
+                <input type="radio" name="{{$field['name']}}" value="{{$key}}" checked>{{$value}}</label>
+            @else
             <label class="radio-inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios5" value="option2"> Option 2 </label>
-            <label class="radio-inline">
-                <input type="radio" name="optionsRadios" id="optionsRadios6" value="option3" disabled> Disabled </label>
+                <input type="radio" name="{{$field['name']}}" value="{{$key}}">{{$value}}</label>
+            @endif           
+            @endforeach
         </div>
 
     </div>
-
-
+@if (isset($field['desc']))
 </div>
+@endif
