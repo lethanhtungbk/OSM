@@ -22,6 +22,7 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('uic',100);
+            $table->integer('is_multi_option', 4);
         });
 
 
