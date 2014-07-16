@@ -13,6 +13,9 @@
 
 
 Route::get('/', 'HomeController@showWelcome');
+
+Route::get('/test','TestController@getTest');
+Route::post('/test-result','TestController@postTestResult');
 Route::controller('setting','SettingController');
 Route::controller('object','ObjectController');
 Route::controller('entity','EntityController');
