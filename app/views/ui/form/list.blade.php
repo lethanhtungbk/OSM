@@ -1,12 +1,30 @@
+@if (isset($field['desc']))
 <div class="form-group">
-    <label class="col-md-3 control-label">List</label>
-    <div class="col-md-3">
-        <select multiple="" class="form-control">
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-            <option>Option 4</option>
-            <option>Option 5</option>
-        </select>                   
+    <label class="col-md-3 control-label">{{$field['desc']}}</label>
+    @endif
+    <div class="col-md-4">
+        <select multiple class="form-control" name='{{$field['name']}}'>
+            @foreach ($field['value'] as $key => $value)
+            @if (array_key_exists('selected',$field))
+                @if (is_array($field['selected'])) 
+                    @if (in_array($key,$field['selected']))
+                        <option value='{{$key}}' selected="true">{{$value}}</option>
+                    @else
+                        <option value='{{$key}}'>{{$value}}</option>
+                    @endif
+                @else
+                    @if ($field['selected']==$key)
+                        <option value='{{$key}}' selected="true">{{$value}}</option>
+                    @else
+                        <option value='{{$key}}'>{{$value}}</option>
+                    @endif                    
+                @endif
+            @else
+                <option value='{{$key}}'>{{$value}}</option>
+            @endif                
+            @endforeach
+        </select>
     </div>
+    @if (isset($field['desc']))
 </div>
+@endif
