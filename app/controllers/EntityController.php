@@ -45,7 +45,7 @@ class EntityController extends \BaseController {
                         }
                     }
                     $entities[$field->field_type_code]->fields = 
-                            array('name'=>$entities[$field->field_type_code]->field_name, 'ui' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
+                            array('name'=>$entities[$field->field_type_code]->field_name.'[]', 'ui' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
                 } else {
                     $entities[$field->field_type_code]->fields = array('name'=>$entities[$field->field_type_code]->field_name, 'ui' => $field->field_type_code, 'value'=>$object->id);
                 }
