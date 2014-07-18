@@ -58,6 +58,10 @@ class EntityController extends \BaseController {
             return View::make('entity.object-entities', array('pageData' => $pageData));
             //return View::make('index', array('pageData' => $pageData));
         }
+        public function postEntitiesSave() {
+            $input = Input::all();
+            var_dump($input);
+        }
 	public function create()
 	{
 		//

@@ -5,8 +5,17 @@ function checkAllInTable(checkedObject, checkedClass) {
 }
 
 function entityEditable(button) {
-    var container = $(button).closest('.entities-container');
+    var container = $(button).closest('.entities-container')[0];
     $('.show-input-value', $(container)).removeClass('hide');
     $('.show-value-cell', $(container)).addClass('hide');
     $('.button-container', $(container)).removeClass('hide');
+}
+
+function cancelEntitiesEditting(button) {
+    var form = $(button).closest("form")[0];
+    var container = $(button).closest('.entities-container');
+    form.reset();
+    $('.show-input-value', $(container)).addClass('hide');
+    $('.show-value-cell', $(container)).removeClass('hide');
+    $('.button-container', $(container)).addClass('hide');
 }

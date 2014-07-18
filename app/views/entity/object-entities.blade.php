@@ -7,6 +7,7 @@
             <span class="pull-right"><a href="#" class="editable" onclick="entityEditable(this);" >Edit</a></span>
         </div>        
     </div>
+    {{ Form::open(array('action' => 'EntityController@postEntitiesSave','class' => 'form-horizontal')) }}
     <div class="portlet-body form">
         @if (isset($pageData->entities))
         <table class="table" >
@@ -31,9 +32,10 @@
             @endforeach
         </table>
         @endif
+    {{Form::close()}}
         <div class="button-container text-center hide">
             <a href="#" class="btn green">Save <i class="fa"></i></a>
-            <a href="#" class="btn green">Cancel <i class="fa"></i></a>
+            <a href="#" class="btn green" onclick="cancelEntitiesEditting(this);">Cancel <i class="fa"></i></a>
         </div>
     </div>
 </div>
