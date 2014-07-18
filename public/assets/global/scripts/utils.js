@@ -19,3 +19,8 @@ function cancelEntitiesEditting(button) {
     $('.show-value-cell', $(container)).removeClass('hide');
     $('.button-container', $(container)).addClass('hide');
 }
+
+function submitEntityForm(button) {
+    var form = $(button).closest("form")[0];
+    form.submit();
+}

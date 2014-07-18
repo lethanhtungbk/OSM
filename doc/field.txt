@@ -1,0 +1,12 @@
+$pageData->data->fields = array(
+            array('desc' => 'Text Field', 'ui' => 'textfield', 'name' => 'text_field','value' => $testSelectedString),
+            array('desc' => 'Text Area Field', 'ui' => 'textarea', 'name' => 'text_area','value' => $testSelectedString),
+            array('desc' => 'Date Field', 'ui' => 'date', 'name' => 'date','value' => $testSelectedDate),
+            array('desc' => 'Image Field', 'ui' => 'image', 'name' => 'image','value' => ''),
+            array('desc' => 'Checkbox Field', 'ui' => 'checkbox', 'name' => 'check_field[]','value' => $testMultipleValues,'selected' => $testSelectedValue),
+            array('desc' => 'Radio Field', 'ui' => 'radio', 'name' => 'radio_field','value' => $testMultipleValues,'selected' => $testSelectedSingleValue),
+            array('desc' => 'Single Dropdown Field', 'ui' => 'dropdown', 'name' => 'single_dropdown_field','value' => $testMultipleValues,'selected' => $testSelectedSingleValue),
+            array('desc' => 'Single List Field', 'ui' => 'list', 'name' => 'single_list_field','value' => $testMultipleValues,'selected' => $testSelectedSingleValue),
+            array('desc' => 'Multiple List Field', 'ui' => 'list', 'name' => 'multiple_list_field[] ','value' => $testMultipleValues,'selected' => $testSelectedValue),
+            
+        );

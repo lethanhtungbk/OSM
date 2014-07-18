@@ -30,7 +30,7 @@ class EntityController extends \BaseController {
                 $entities[$field->field_type_code] = new stdClass();
                 $entities[$field->field_type_code]->field_type = $field->field_type_code;
                 $entities[$field->field_type_code]->field_name = $field->field_name;
-                
+                $entities[$field->field_type_code]->field_id = $field->field_id;
                 $field_value = array();
                 foreach ($entities_data as $data) {
                     if ($data->field_id == $field->field_id) {
@@ -45,9 +45,9 @@ class EntityController extends \BaseController {
                         }
                     }
                     $entities[$field->field_type_code]->fields = 
-                            array('ui' => $field->field_type_code, 'name' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
+                            array('name'=>$entities[$field->field_type_code]->field_name, 'ui' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
                 } else {
-                    $entities[$field->field_type_code]->fields = array('ui' => $field->field_type_code, 'name' => 'id', 'value'=>$object->id);
+                    $entities[$field->field_type_code]->fields = array('name'=>$entities[$field->field_type_code]->field_name, 'ui' => $field->field_type_code, 'value'=>$object->id);
                 }
                 $entities[$field->field_type_code]->field_value = $field_value;
             }

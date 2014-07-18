@@ -7,14 +7,14 @@
             <span class="pull-right"><a href="#" class="editable" onclick="entityEditable(this);" >Edit</a></span>
         </div>        
     </div>
-    {{ Form::open(array('action' => 'EntityController@postEntitiesSave','class' => 'form-horizontal')) }}
-    <div class="portlet-body form">
+    {{ Form::open(array('action' => 'EntityController@postEntitiesSave')) }}
+    <div class="portlet-body form bg-info">
         @if (isset($pageData->entities))
         <table class="table" >
             @foreach ($pageData->entities as $row)
             <tr >
                 <td style="width: 50%">{{$row->field_name}}</td>
-                <td style="width: 50%" class="td-editable">
+                <td style="width: 50%" class="td-editable" field_id="{{$row->field_id}}">
                     <span class="show-value-cell">
                     @if(isset($row->field_value))
                         {{implode (',', $row->field_value)}}
@@ -34,7 +34,7 @@
         @endif
     {{Form::close()}}
         <div class="button-container text-center hide">
-            <a href="#" class="btn green">Save <i class="fa"></i></a>
+            <a href="#" class="btn green" onclick="submitEntityForm(this);">Save <i class="fa"></i></a>
             <a href="#" class="btn green" onclick="cancelEntitiesEditting(this);">Cancel <i class="fa"></i></a>
         </div>
     </div>
