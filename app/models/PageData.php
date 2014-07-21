@@ -12,6 +12,12 @@
  * @author NhimXu
  */
 class PageData {
+    function __construct() {
+       $this->data = new stdClass();
+       $this->data->save = '';
+       $this->data->back = '';
+       $this->data->fields = null;
+   }
     //put your code here
     public $data;
 }

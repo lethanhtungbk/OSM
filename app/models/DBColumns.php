@@ -14,6 +14,12 @@ class DBColumns {
         "groups" => array(
             array("desc" => "Group","name" => "name"),            
         ),
+        "group-rules" => array(
+            array("desc" => "Group rules","name" => "name"),            
+            array("desc" => "Group","name" => "group_name"),            
+        ),
+        
+        
         "object-groups"=>array(
             array("desc" => "Object","name" => "name"),            
             array("desc" => "Properties Group","name" => "groupName"),            

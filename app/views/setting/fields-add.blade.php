@@ -9,7 +9,7 @@
         <!-- BEGIN FORM-->
         {{ Form::open(array('url' => $pageData->data->save,'class' => 'form-horizontal' , 'method' => 'post')) }}
         <div class="form-body">
-            @if ($pageData->data != null)
+            @if ($pageData->data != null && $pageData->data->fields != null)
             @foreach ($pageData->data->fields as $field)
             @include('ui.form.'.$field['ui'],array('field' => $field))
             @endforeach

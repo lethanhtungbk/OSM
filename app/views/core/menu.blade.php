@@ -52,6 +52,9 @@
                     <li>
                         <a href="{{URL::to('/setting/field-groups')}}"><i class="icon-basket"></i> Field Groups</a>
                     </li>                   
+                    <li>
+                        <a href="{{URL::to('/setting/group-rules')}}"><i class="icon-basket"></i> Group rules</a>
+                    </li>                   
                 </ul>
             </li>
             <li >

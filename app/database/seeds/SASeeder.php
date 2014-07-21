@@ -27,14 +27,14 @@ class SASeeder extends Seeder {
         //field_types
         DB::table(self::add_prefix('field_types'))->insert(
                 array(
-                    array('id' => 1, 'name' => 'Text Field', 'uic' => 'textfield'),
-                    array('id' => 2, 'name' => 'Text Area', 'uic' => 'textarea'),
-                    array('id' => 3, 'name' => 'Dropdownbox', 'uic' => 'dropdown'),
-                    array('id' => 4, 'name' => 'Listbox', 'uic' => 'list'),
-                    array('id' => 5, 'name' => 'Checkbox', 'uic' => 'checkbox'),
-                    array('id' => 6, 'name' => 'Radiobox', 'uic' => 'radio'),
-                    array('id' => 7, 'name' => 'DatePicker', 'uic' => 'date'),
-                    array('id' => 8, 'name' => 'Image', 'uic' => 'image'),
+                    array('id' => 1, 'name' => 'Text Field', 'uic' => 'textfield','is_multi_option' => 0),
+                    array('id' => 2, 'name' => 'Text Area', 'uic' => 'textarea','is_multi_option' => 0),
+                    array('id' => 3, 'name' => 'Dropdownbox', 'uic' => 'dropdown','is_multi_option' => 1),
+                    array('id' => 4, 'name' => 'Listbox', 'uic' => 'list','is_multi_option' => 1),
+                    array('id' => 5, 'name' => 'Checkbox', 'uic' => 'checkbox','is_multi_option' => 1),
+                    array('id' => 6, 'name' => 'Radiobox', 'uic' => 'radio','is_multi_option' => 1),
+                    array('id' => 7, 'name' => 'DatePicker', 'uic' => 'date','is_multi_option' => 0),
+                    array('id' => 8, 'name' => 'Image', 'uic' => 'image','is_multi_option' => 0),
                 )
         );
 
@@ -126,6 +126,12 @@ class SASeeder extends Seeder {
                     array('object_id' => 1, 'field_id' => '6' , 'value' => '3'),
                     array('object_id' => 1, 'field_id' => '7' , 'value' => '3'),
                     array('object_id' => 1, 'field_id' => '8' , 'value' => '1'),
+                )
+        );
+        
+        DB::table(self::add_prefix('group_rules'))->insert(
+                array(
+                    array('group_id' => 1,'name' => 'Collage properties rules in backend', 'field_order_in_list' => '1,2,3,4,5,6,7,8' , 'field_order_in_detail' => '1,2,3,4,5,6,7,8','field_order_in_filter' => '1,2,3,4,5,6,7,8'),
                 )
         );
     }

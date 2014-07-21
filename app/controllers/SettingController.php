@@ -3,10 +3,10 @@
 class SettingController extends BaseController {
     //Field Type 
     public function getFieldTypes() {
+        
         $fields = FieldTypes::select('id', 'name')->get();
-
+        
         $pageData = new PageData();
-        $pageData->data = new stdClass();
         $pageData->data->columns = DBColumns::getColumMap('field-types');
         $pageData->data->records = $fields;
         $pageData->data->add = URL::to('setting/field-types-add');
@@ -23,7 +23,6 @@ class SettingController extends BaseController {
 
     public function getFieldTypesAdd() {
         $pageData = new PageData();
-        $pageData->data = new stdClass();
         $pageData->data->fields = array(
             array('desc' => 'Field Type Name', 'ui' => 'textfield', 'name' => 'name'),
         );
@@ -36,7 +35,6 @@ class SettingController extends BaseController {
 
     public function postFieldTypesSave() {
         $pageData = new PageData();
-        $pageData->data = new stdClass();
 
         $input = Input::all();
 
@@ -56,7 +54,6 @@ class SettingController extends BaseController {
         $fieldType = FieldTypes::find($id);
         //TODO: need validate $fieldTypes
         $pageData = new PageData();
-        $pageData->data = new stdClass();
         $pageData->data->fields = array(
             array('desc' => 'Field Type Name', 'ui' => 'textfield', 'name' => 'name' ,'value' => $fieldType->name),
             array( 'ui' => 'hidden', 'name' => 'id','value' => $fieldType->id),
@@ -99,7 +96,6 @@ class SettingController extends BaseController {
 
         $pageData = new PageData();
 
-        $pageData->data = new stdClass();
 
         $pageData->data->columns = DBColumns::getColumMap('fields');
         $pageData->data->records = $fields;
@@ -122,7 +118,6 @@ class SettingController extends BaseController {
     public function getFieldsAdd() {
         $pageData = new PageData();
 
-        $pageData->data = new stdClass();
 
         $pageData->data->fields = array(
             array('desc' => 'Field Name', 'ui' => 'textfield', 'name' => 'name'),
@@ -150,7 +145,6 @@ class SettingController extends BaseController {
         $fields = Groups::select('id', 'name')->get();
 
         $pageData = new PageData();
-        $pageData->data = new stdClass();
         $pageData->data->columns = DBColumns::getColumMap('groups');
         $pageData->data->records = $fields; 
         $pageData->data->top_action = array(
@@ -165,7 +159,6 @@ class SettingController extends BaseController {
     public function getFieldGroupsAdd()
     {
         $pageData = new PageData();
-        $pageData->data = new stdClass();
         $pageData->data->fields = array(
             array('desc' => 'Group Name', 'ui' => 'textfield', 'name' => 'name'),
             array('desc' => 'Select group fields', 'ui' => 'checkbox', 'name' => 'fields[]','value' => Fields::lists('name', 'id')),
@@ -216,7 +209,6 @@ class SettingController extends BaseController {
             array_push($selected, $groupField->field_id);
         }
         
-        $pageData->data = new stdClass();
         $pageData->data->fields = array(
             array('desc' => 'Group Name', 'ui' => 'textfield', 'name' => 'name', 'value' => $group->name),
             array('desc' => 'Select group fields', 'ui' => 'checkbox', 'name' => 'fields[]','value' => Fields::lists('name', 'id'),'selected' => $selected),
@@ -257,5 +249,66 @@ class SettingController extends BaseController {
             return Redirect::to('setting/field-groups-edit/'.$id);
         }
         
+    }
+    
+    public function getGroupRules()
+    {
+        $groupRules = GroupRules::select('id', 'name','group_id')->get();
+        
+        $groups = Groups::lists('name', 'id');
+        
+        foreach ($groupRules as $groupRule)
+        {
+            if (array_key_exists($groupRule->group_id, $groups))
+            {
+                $groupRule->group_name = $groups[$groupRule->group_id];                
+            }
+            else
+            {
+                $groupRule->group_name = 'undefined';
+            }
+        }
+        
+        $pageData = new PageData();
+        $pageData->data->columns = DBColumns::getColumMap('group-rules');
+        $pageData->data->records = $groupRules; 
+        $pageData->data->top_action = array(
+            array('url' => URL::to('setting/group-rules-add'), 'label'=>'New group rules', 'class'=>'fa-plus'),
+            array('url' => URL::to('setting/group-rules-remove'), 'label'=>'Remove group rules', 'class'=>'fa-minus'),
+        );
+        $pageData->data->edit = URL::to('setting/group-rules-edit');
+        $pageData->data->remove = URL::to('setting/group-rules-remove');
+        return View::make('setting.fields', array('pageData' => $pageData));
+    }
+    
+    public function getGroupRulesEdit($id)
+    {
+        $pageData = new PageData();
+        
+        $groupRule = GroupRules::find($id);
+        
+        
+        $groups = Groups::lists('name','id');
+        
+        
+        
+        if ($groupRule != null)
+        {
+            $pageData->data->fields = array(
+                array('desc' => 'Group Rule', 'ui' => 'textfield', 'name' => 'name', 'value' => $groupRule->name),
+                array('desc' => 'Group ', 'ui' => 'dropdown', 'name' => 'name', 'value' => $groups,'selected' => $groupRule->group_id),
+                array('desc' => 'Fields order in list', 'ui' => 'textfield', 'name' => 'field_order_in_list', 'value' => $groupRule->field_order_in_list),
+                array('desc' => 'Fields order in detail', 'ui' => 'textfield', 'name' => 'field_order_in_detail', 'value' => $groupRule->field_order_in_detail),
+                array('desc' => 'Fields order in filter', 'ui' => 'textfield', 'name' => 'field_order_in_filter', 'value' => $groupRule->field_order_in_filter),
+                array('ui' => 'hidden','name' => 'id','value' => $groupRule->id),
+            );
+            
+        }
+        
+        
+        $pageData->data->save = URL::to('setting/field-groups-update');
+        $pageData->data->back = URL::to('setting/field-groups');
+
+        return View::make('setting.fields-add', array('pageData' => $pageData));
     }
 }

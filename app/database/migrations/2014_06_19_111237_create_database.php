@@ -22,7 +22,7 @@ class CreateDatabase extends Migration {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('uic',100);
-            $table->integer('is_multi_option', 4);
+            $table->tinyInteger('is_multi_option')->default(0);
         });
 
 
@@ -60,6 +60,7 @@ class CreateDatabase extends Migration {
         Schema::create(self::add_prefix('group_rules'), function($table) {
             $table->increments('id');
             $table->integer('group_id');
+            $table->string('name');
             $table->string('field_order_in_list');
             $table->string('field_order_in_detail');
             $table->string('field_order_in_filter');
