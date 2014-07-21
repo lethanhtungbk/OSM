@@ -35,4 +35,9 @@ class DBColumns {
         }
         return null;
     }
+    
+    public static function getTable($name)
+    {
+        return "sa__".$name;
+    }
 }

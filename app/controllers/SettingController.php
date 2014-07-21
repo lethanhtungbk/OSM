@@ -281,14 +281,51 @@ class SettingController extends BaseController {
         return View::make('setting.fields', array('pageData' => $pageData));
     }
     
+    private function getFieldName($idStr,$fields)
+    {
+        $nameStr = '';        
+        $idArr= explode(",",$idStr);            
+        $nameArr = array();      
+        foreach ($idArr as $id)
+        {
+            if (array_key_exists($id, $fields))
+            {
+                array_push($nameArr, $fields[$id]);
+            }
+        }               
+        $nameStr = implode(',',$nameArr);
+        return $nameStr;                
+    }
+    
     public function getGroupRulesEdit($id)
     {
         $pageData = new PageData();
+        $groupRule = GroupRules::where('group_id','=',$id)->get();
         
-        $groupRule = GroupRules::find($id);
+        if (count($groupRule) == 0)
+            return;
         
+        $groupRule = $groupRule[0];
         
         $groups = Groups::lists('name','id');
+        
+        //get group fields name
+        $groupFields = DB::table(DBColumns::getTable('fields'))
+                ->join(DBColumns::getTable('group_fields'),DBColumns::getTable('fields').'.id','=',  DBColumns::getTable('group_fields').'.field_id')
+                ->select(DBColumns::getTable('fields').'.name',  DBColumns::getTable('fields').'.id')
+                ->get();
+        
+        //serialize fields
+        
+        $groupAllFieldArr = array();
+        foreach ($groupFields as $groupField)
+        {
+            $groupAllFieldArr[$groupField->id] = $groupField->name;
+        }
+        $groupAllFieldStr = '"'.implode('","',$groupAllFieldArr).'"';
+        $fieldOrderInList = $this->getFieldName($groupRule->field_order_in_list, $groupAllFieldArr);
+        $fieldOrderInDetail = $this->getFieldName($groupRule->field_order_in_detail, $groupAllFieldArr);
+        $fieldOrderInFilter = $this->getFieldName($groupRule->field_order_in_filter, $groupAllFieldArr);
         
         
         
@@ -297,18 +334,29 @@ class SettingController extends BaseController {
             $pageData->data->fields = array(
                 array('desc' => 'Group Rule', 'ui' => 'textfield', 'name' => 'name', 'value' => $groupRule->name),
                 array('desc' => 'Group ', 'ui' => 'dropdown', 'name' => 'name', 'value' => $groups,'selected' => $groupRule->group_id),
-                array('desc' => 'Fields order in list', 'ui' => 'textfield', 'name' => 'field_order_in_list', 'value' => $groupRule->field_order_in_list),
-                array('desc' => 'Fields order in detail', 'ui' => 'textfield', 'name' => 'field_order_in_detail', 'value' => $groupRule->field_order_in_detail),
-                array('desc' => 'Fields order in filter', 'ui' => 'textfield', 'name' => 'field_order_in_filter', 'value' => $groupRule->field_order_in_filter),
+                array('desc' => 'Fields order in list', 'ui' => 'token', 'name' => 'field_order_in_list', 'value' => $fieldOrderInList, 'id' => 'token1'),
+                array('desc' => 'Fields order in detail', 'ui' => 'token', 'name' => 'field_order_in_detail', 'value' => $fieldOrderInDetail , 'id' => 'token2'),
+                array('desc' => 'Fields order in filter', 'ui' => 'token', 'name' => 'field_order_in_filter', 'value' => $fieldOrderInFilter, 'id' => 'token3'),
                 array('ui' => 'hidden','name' => 'id','value' => $groupRule->id),
             );
             
         }
         
         
-        $pageData->data->save = URL::to('setting/field-groups-update');
-        $pageData->data->back = URL::to('setting/field-groups');
+        $pageData->data->extra  = '$("#token1").select2({tags: ['.$groupAllFieldStr.']});'
+                                . '$("#token2").select2({tags: ['.$groupAllFieldStr.']});'
+                                . '$("#token3").select2({tags: ['.$groupAllFieldStr.']});';
+        
+        $pageData->data->save = URL::to('setting/group-rule-update');
+        $pageData->data->back = URL::to('setting/group-rules');
 
         return View::make('setting.fields-add', array('pageData' => $pageData));
+    }
+    
+    public function postGroupRuleUpdate()
+    {
+        $input = Input::all();
+        
+        var_dump($input);
     }
 }

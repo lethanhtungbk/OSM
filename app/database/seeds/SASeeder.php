@@ -131,7 +131,7 @@ class SASeeder extends Seeder {
         
         DB::table(self::add_prefix('group_rules'))->insert(
                 array(
-                    array('group_id' => 1,'name' => 'Collage properties rules in backend', 'field_order_in_list' => '1,2,3,4,5,6,7,8' , 'field_order_in_detail' => '1,2,3,4,5,6,7,8','field_order_in_filter' => '1,2,3,4,5,6,7,8'),
+                    array('group_id' => 1,'name' => 'Collage properties rules in backend', 'field_order_in_list' => '1' , 'field_order_in_detail' => '2','field_order_in_filter' => '3'),
                 )
         );
     }

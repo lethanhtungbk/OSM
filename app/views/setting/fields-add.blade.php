@@ -15,10 +15,9 @@
             @endforeach
             @endif            
         </div>
-       @if ($errors->any())
+        @if ($errors->any())
         <div>
             <label class="col-md-3 control-label">{{ implode('', $errors->all('<li class="error">:message</li>')) }}</label>
-            
         </div>
         @endif      
         <div class="form-actions fluid">
@@ -29,10 +28,18 @@
         </div>
         {{Form::close()}}
         <!-- END FORM-->
-
-
     </div>
 </div>
+@stop
+
+@section('custom-style')
+{{ HTML::style('assets/global/plugins/select2/select2.css'); }}
+{{ HTML::style('assets/global/css/plugins.css'); }}
+@stop
+
+@section('custom-plugin')
+@parent
+{{HTML::script('assets/global/plugins/select2/select2.min.js')}}
 @stop
 
 @section('custom-script')
@@ -68,5 +75,9 @@ function onRemoveValue(element)
     if ($('#extraValue').find('div.form-group').length > 1) 
         $(element).closest(".form-group").remove()
 }
+
+@if (property_exists($pageData->data,'extra'))
+{{$pageData->data->extra}}
+@endif
 @stop
 

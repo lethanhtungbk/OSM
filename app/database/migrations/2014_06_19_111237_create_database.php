@@ -17,6 +17,8 @@ class CreateDatabase extends Migration {
     }
 
     public function up() {
+        
+        $this->down();
         //field_types
         Schema::create(self::add_prefix('field_types'), function($table) {
             $table->increments('id');
