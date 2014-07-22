@@ -48,9 +48,7 @@ var ComponentsDropdowns = function () {
             }
         });
 
-        $("#select2_sample5").select2({
-            tags: ["red", "green", "blue", "yellow", "pink"]
-        });
+       
 
 
         function movieFormatResult(movie) {

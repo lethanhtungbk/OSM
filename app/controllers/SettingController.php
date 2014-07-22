@@ -333,7 +333,7 @@ class SettingController extends BaseController {
         {
             $pageData->data->fields = array(
                 array('desc' => 'Group Rule', 'ui' => 'textfield', 'name' => 'name', 'value' => $groupRule->name),
-                array('desc' => 'Group ', 'ui' => 'dropdown', 'name' => 'name', 'value' => $groups,'selected' => $groupRule->group_id),
+                array('desc' => 'Group ', 'ui' => 'dropdown', 'name' => 'group_id', 'value' => $groups,'selected' => $groupRule->group_id),
                 array('desc' => 'Fields order in list', 'ui' => 'token', 'name' => 'field_order_in_list', 'value' => $fieldOrderInList, 'id' => 'token1'),
                 array('desc' => 'Fields order in detail', 'ui' => 'token', 'name' => 'field_order_in_detail', 'value' => $fieldOrderInDetail , 'id' => 'token2'),
                 array('desc' => 'Fields order in filter', 'ui' => 'token', 'name' => 'field_order_in_filter', 'value' => $fieldOrderInFilter, 'id' => 'token3'),
@@ -357,6 +357,36 @@ class SettingController extends BaseController {
     {
         $input = Input::all();
         
-        var_dump($input);
+        $groupId = $input["group_id"];
+        
+        $groupRule = GroupRules::where('group_id','=',$groupId)->get();
+        
+        if (count($groupRule) != 1)
+        {
+            //valide here;
+            
+            return;
+        }
+        $groupRule = $groupRule[0];
+        //get group fields name
+        $groupFields = DB::table(DBColumns::getTable('fields'))
+                ->join(DBColumns::getTable('group_fields'),DBColumns::getTable('fields').'.id','=',  DBColumns::getTable('group_fields').'.field_id')
+                ->select(DBColumns::getTable('fields').'.name',  DBColumns::getTable('fields').'.id')
+                ->get();
+        
+        $groupAllFieldArr = array();
+        foreach ($groupFields as $groupField)
+        {
+            $groupAllFieldArr[$groupField->name] = $groupField->id;
+        }
+        
+        $groupRule->field_order_in_list = $this->getFieldName($input['field_order_in_list'],$groupAllFieldArr);
+        $groupRule->field_order_in_detail= $this->getFieldName($input['field_order_in_detail'],$groupAllFieldArr);
+        $groupRule->field_order_in_filter= $this->getFieldName($input['field_order_in_filter'],$groupAllFieldArr);
+        $groupRule->name = $input['name'];
+        $groupRule->save();
+        
+        //need have message here..
+        return $this->getGroupRulesEdit($groupId);
     }
 }
