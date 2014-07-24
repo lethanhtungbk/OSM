@@ -56,14 +56,16 @@
                         <a href="{{URL::to('/setting/group-rules')}}"><i class="icon-basket"></i> Group rules</a>
                     </li>                   
                 </ul>
-            </li>
+            </li>                      
+            @foreach (MenuModel::getObjectMenu() as $o)
             <li >
-                <a href="{{URL::to('/object/object/1')}}">
+                <a href="{{URL::to('/tung/'.$o->tag)}}">
                     <i class="icon-rocket"></i>
-                    <span class="title">Universities </span>
+                    <span class="title">{{$o->name}} </span>
                     <span class="arrow "></span>
-                </a>                
-            </li>            
+                </a>                 
+            </li>    
+            @endforeach            
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

@@ -85,7 +85,11 @@ class SASeeder extends Seeder {
         //group
         DB::table(self::add_prefix('groups'))->insert(
                 array(
-                    array('id' => 1, 'name' => 'Collage Properties'),
+                    array('id' => 1, 'name' => 'Universities','tag' => 'univeristies'),
+                    array('id' => 2, 'name' => 'Partners','tag' => 'partners'),
+                    array('id' => 3, 'name' => 'Students','tag' => 'students'),
+                    array('id' => 4, 'name' => 'Dummy','tag' => 'dummy-1'),
+                    
                 )
         );
 

@@ -19,3 +19,6 @@ Route::post('/test-result','TestController@postTestResult');
 Route::controller('setting','SettingController');
 Route::controller('object','ObjectController');
 Route::controller('entity','EntityController');
+
+Route::get('tung/{group}',  'TungController@getEntities');
+Route::get('tung/{group}/{id}',  'TungController@getEntity');

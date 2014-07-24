@@ -48,6 +48,7 @@ class CreateDatabase extends Migration {
         Schema::create(self::add_prefix('groups'), function($table) {
             $table->increments('id');
             $table->string('name', 255);
+            $table->string('tag', 255);
         });
 
 
