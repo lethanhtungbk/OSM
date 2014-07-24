@@ -29,9 +29,7 @@
                 
                 <td class="table-column-action">
                     <div class="btn-group">
-                        <a id="sample_editable_1_new" class="btn green" href="{{$data->edit.'/'.$row->id}}">
-                            Edit <i class="fa fa-plus"></i>
-                        </a>
+                        <a id="sample_editable_1_new" class="btn green" href="{{$data->edit.'/'.$row->id}}"><i class="fa fa-plus"></i> Edit</a>
                     </div>
                 </td>
             </tr>

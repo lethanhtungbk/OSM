@@ -11,7 +11,7 @@ class DBColumns {
             array("desc" => "Field code","name" => "code"),
             array("desc" => "Field type","name" => "fileTypeName"),                
         ),
-        "groups" => array(
+        "field-groups" => array(
             array("desc" => "Group","name" => "name"),            
         ),
         "group-rules" => array(
