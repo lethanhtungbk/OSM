@@ -24,6 +24,10 @@ class DBColumns {
             array("desc" => "Object","name" => "name"),            
             array("desc" => "Properties Group","name" => "groupName"),            
         ),
+        
+        "entities" => array (
+            array("desc" => "Object","name" => "name"),                        
+        ),      
     );
     
     

@@ -14,28 +14,27 @@ class UIModel {
         return array('ui' => 'hidden', 'name' => $name, 'value' => $value);
     }
 
-    public static function createDropDownForFields($desc, $name, $value = null, $selected = null) {        
-        return self::createMultiple('dropdown_for_fields', $desc, $name,$value);
+    public static function createDropDownForFields($desc, $name, $value = null, $selected = null) {
+        return self::createMultiple('dropdown_for_fields', $desc, $name, $value);
     }
-    
-     public static function createDropDown($desc, $name, $value = null, $selected = null) {        
-        return self::createMultiple('dropdown', $desc, $name,$value);
+
+    public static function createDropDown($desc, $name, $value = null, $selected = null) {
+        return self::createMultiple('dropdown', $desc, $name, $value);
     }
-    
-    public static function createList($desc, $name, $value = null, $selected = null) {        
-        return self::createMultiple('list', $desc, $name,$value);
+
+    public static function createList($desc, $name, $value = null, $selected = null) {
+        return self::createMultiple('list', $desc, $name, $value);
     }
 
     public static function createCheckBox($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('checkbox', $desc, $name,$value);
+        return self::createMultiple('checkbox', $desc, $name, $value);
     }
-    
+
     public static function createRadio($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('radio', $desc, $name,$value);
+        return self::createMultiple('radio', $desc, $name, $value);
     }
-    
-    private static function createMultiple($ui,$desc,$name,$value=null,$selected = null)
-    {
+
+    private static function createMultiple($ui, $desc, $name, $value = null, $selected = null) {
         if ($value != null) {
             if ($selected != null) {
                 return array('desc' => $desc, 'ui' => $ui, 'name' => $name, 'value' => $value, 'selected' => $selected);
@@ -45,6 +44,24 @@ class UIModel {
         } else {
             return array('desc' => $desc, 'ui' => $ui, 'name' => $name);
         }
+    }
+
+    public static function createMultipleByType($type, $desc, $name, $value = null, $selected = null) {
+        switch ($type) {
+            case FieldTypeValue::TYPE_CHECKBOX:
+                return self::createCheckBox($desc, $name . '[]', $value, $selected);
+            case FieldTypeValue::TYPE_DROPDOWN_MULTIPLE:
+                return self::createDropDown($desc, $name . '[]', $value, $selected);
+            case FieldTypeValue::TYPE_LISTBOX_MULTIPLE:
+                return self::createList($desc, $name . '[]', $value, $selected);
+            case FieldTypeValue::TYPE_DROPDOWN_SINGLE:
+                return self::createDropDown($desc, $name, $value, $selected);
+            case FieldTypeValue::TYPE_RADIOBOX:
+                return self::createRadio($desc, $name, $value, $selected);
+            case FieldTypeValue::TYPE_LISTBOX_SINGLE:
+                return self::createRadio($desc, $name, $value, $selected);
+        }
+        return null;
     }
 
 }

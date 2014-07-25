@@ -25,6 +25,7 @@ class CreateDatabase extends Migration {
             $table->string('name', 100);
             $table->string('uic',100);
             $table->tinyInteger('is_multi_option')->default(0);
+            $table->tinyInteger('type_value')->default(0);
         });
 
 

@@ -27,14 +27,16 @@ class SASeeder extends Seeder {
         //field_types
         DB::table(self::add_prefix('field_types'))->insert(
                 array(
-                    array('id' => 1, 'name' => 'Text Field', 'uic' => 'textfield','is_multi_option' => 0),
-                    array('id' => 2, 'name' => 'Text Area', 'uic' => 'textarea','is_multi_option' => 0),
-                    array('id' => 3, 'name' => 'Dropdownbox', 'uic' => 'dropdown','is_multi_option' => 1),
-                    array('id' => 4, 'name' => 'Listbox', 'uic' => 'list','is_multi_option' => 1),
-                    array('id' => 5, 'name' => 'Checkbox', 'uic' => 'checkbox','is_multi_option' => 1),
-                    array('id' => 6, 'name' => 'Radiobox', 'uic' => 'radio','is_multi_option' => 1),
-                    array('id' => 7, 'name' => 'DatePicker', 'uic' => 'date','is_multi_option' => 0),
-                    array('id' => 8, 'name' => 'Image', 'uic' => 'image','is_multi_option' => 0),
+                    array('id' => 1, 'name' => 'Text Field', 'uic' => 'textfield','is_multi_option' => 0,'type_value' => FieldTypeValue::TYPE_TEXT),
+                    array('id' => 2, 'name' => 'Text Area', 'uic' => 'textarea','is_multi_option' => 0,'type_value' => FieldTypeValue::TYPE_TEXT),
+                    array('id' => 3, 'name' => 'Single Value Dropdownbox', 'uic' => 'dropdown','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_DROPDOWN_SINGLE),
+                    array('id' => 4, 'name' => 'Single Value Listbox', 'uic' => 'list','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_LISTBOX_SINGLE),
+                    array('id' => 5, 'name' => 'Checkbox', 'uic' => 'checkbox','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_CHECKBOX),
+                    array('id' => 6, 'name' => 'Radiobox', 'uic' => 'radio','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_RADIOBOX),
+                    array('id' => 7, 'name' => 'DatePicker', 'uic' => 'date','is_multi_option' => 0,'type_value' => FieldTypeValue::TYPE_DATAPICKER),
+                    array('id' => 8, 'name' => 'Image', 'uic' => 'image','is_multi_option' => 0,'type_value' => FieldTypeValue::TYPE_IMAGE),
+                    array('id' => 9, 'name' => 'Multiple Values Dropdownbox', 'uic' => 'dropdown','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_DROPDOWN_MULTIPLE),
+                    array('id' => 10, 'name' => 'Multiple Values Listbox', 'uic' => 'list','is_multi_option' => 1,'type_value' => FieldTypeValue::TYPE_LISTBOX_MULTIPLE),
                 )
         );
 
@@ -135,7 +137,10 @@ class SASeeder extends Seeder {
         
         DB::table(self::add_prefix('group_rules'))->insert(
                 array(
-                    array('group_id' => 1,'name' => 'Collage properties rules in backend', 'field_order_in_list' => '1' , 'field_order_in_detail' => '2','field_order_in_filter' => '3'),
+                    array('group_id' => 1,'name' => 'Collage properties rules in backend', 
+                        'field_order_in_list' => '1' , 
+                        'field_order_in_detail' => '2',
+                        'field_order_in_filter' => '1,2,3,4,5,6,7,8'),
                 )
         );
     }

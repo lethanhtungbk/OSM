@@ -11,22 +11,83 @@
  *
  * @author Tung
  */
-class TungController extends BaseController{
-    function getEntities($group)
-    {
-        $group = Groups::where('tag','=',$group)->get();
-        if (count($group) != 1)
-        {
+class TungController extends BaseController {
+
+    private $baseURL = 'setting';
+
+    function getEntities($tag) {
+        $group = Groups::where('tag', '=', $tag)->get();
+        if (count($group) != 1) {
             //invalid group
             return;
         }
+
+        $group = $group[0];
+
+
+        $groupRule = GroupRules::where('group_id', '=', $group->id)->get();
+
+        if (count($groupRule) != 1) {
+            //invalid group rule
+            return;
+        }
+
+        //filter search bar
+        $groupRule = $groupRule[0];
+        if ($groupRule->field_order_in_filter != '') {
+            $fields = DB::table(DBColumns::getTable('fields'))
+                    ->join(DBColumns::getTable('field_types'), DBColumns::getTable('fields') . '.field_type_id', '=', DBColumns::getTable('field_types') . '.id')
+                    ->whereIn(DBColumns::getTable('fields') . '.id', explode(',', $groupRule->field_order_in_filter))
+                    ->select(DBColumns::getTable('fields') . '.id', DBColumns::getTable('fields') . '.name', DBColumns::getTable('field_types') . '.type_value')
+                    ->get();
+
+
+            $uifields = array(
+                UIModel::createTextEdit('Search', 'full_search'),
+            );
+
+            foreach ($fields as $field) {
+                switch ($field->type_value) 
+                {
+                    case FieldTypeValue::TYPE_CHECKBOX:
+                    case FieldTypeValue::TYPE_DROPDOWN_MULTIPLE:
+                    case FieldTypeValue::TYPE_DROPDOWN_SINGLE:
+                    case FieldTypeValue::TYPE_LISTBOX_MULTIPLE:
+                    case FieldTypeValue::TYPE_LISTBOX_SINGLE:
+                    case FieldTypeValue::TYPE_RADIOBOX:                        
+                        $value = DB::table(DBColumns::getTable('field_values'))->where('field_id', '=', $field->id)->lists('value', 'id');
+                        $value = array('0' => $field->name) + $value;
+                        array_push($uifields, UIModel::createMultipleByType($field->type_value, $field->name, 'fields_' . $field->id, $value));
+                        break;
+                    case FieldTypeValue::TYPE_TEXT:
+                        break;
+
+                    case FieldTypeValue::TYPE_IMAGE:
+                        break;
+                }
+            }
+
+            //var_dump($fields);
+        }
+
+
+
+
+
+        $entities = Object::where('group_id', '=', $group->id)->select('name')->get();
+
+
+        $pageData = new PageData($this->baseURL, $tag);
+
+        $pageData->data->columns = DBColumns::getColumMap('entities');
+        $pageData->data->records = $entities;
+        $pageData->data->filters = $uifields;
+        $pageData->isListView = true;
+        return $pageData->getView();
     }
-    
-    
-    function getEntity($group,$id)
-    {
+
+    function getEntity($group, $id) {
         //view detail object of a group
-        
     }
-    
+
 }

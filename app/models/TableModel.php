@@ -25,8 +25,7 @@ class TableModel {
             case 'field-groups':
                 return $this->getFieldGroups();
             case 'group-rules':
-                return $this->getGroupRules();
-                
+                return $this->getGroupRules();                
         }
     }
     
