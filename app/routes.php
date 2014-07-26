@@ -21,4 +21,6 @@ Route::controller('object','ObjectController');
 Route::controller('entity','EntityController');
 
 Route::get('tung/{group}',  'TungController@getEntities');
+Route::post('tung/{group}',  'TungController@getEntities');
+
 Route::get('tung/{group}/{id}',  'TungController@getEntity');

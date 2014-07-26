@@ -1,8 +1,8 @@
 @if (isset($field['desc']))
 <div class="form-group">
-    <label class="col-md-3 control-label">{{$field['desc']}}</label>
+    <label class="col-md-4 control-label">{{$field['desc']}}</label>
 @endif    
-    <div class="col-md-3">
+    <div class="col-md-5">
         @foreach ($field['value'] as $key => $value)
         <div>
         @if (array_key_exists('selected',$field) && in_array($key,$field['selected']))

@@ -15,23 +15,23 @@ class UIModel {
     }
 
     public static function createDropDownForFields($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('dropdown_for_fields', $desc, $name, $value);
+        return self::createMultiple('dropdown_for_fields', $desc, $name, $value, $selected);
     }
 
     public static function createDropDown($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('dropdown', $desc, $name, $value);
+        return self::createMultiple('dropdown', $desc, $name, $value, $selected);
     }
 
     public static function createList($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('list', $desc, $name, $value);
+        return self::createMultiple('list', $desc, $name, $value, $selected);
     }
 
     public static function createCheckBox($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('checkbox', $desc, $name, $value);
+        return self::createMultiple('checkbox', $desc, $name, $value, $selected);
     }
 
     public static function createRadio($desc, $name, $value = null, $selected = null) {
-        return self::createMultiple('radio', $desc, $name, $value);
+        return self::createMultiple('radio', $desc, $name, $value, $selected);
     }
 
     private static function createMultiple($ui, $desc, $name, $value = null, $selected = null) {
@@ -47,6 +47,7 @@ class UIModel {
     }
 
     public static function createMultipleByType($type, $desc, $name, $value = null, $selected = null) {
+        //return self::createRadio($desc, $name . '[]', $value, $selected);
         switch ($type) {
             case FieldTypeValue::TYPE_CHECKBOX:
                 return self::createCheckBox($desc, $name . '[]', $value, $selected);
@@ -63,5 +64,7 @@ class UIModel {
         }
         return null;
     }
+    
+    
 
 }

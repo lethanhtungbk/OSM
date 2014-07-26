@@ -1,8 +1,8 @@
 @if (isset($field['desc']))
 <div class="form-group">
-    <label class="col-md-3 control-label">{{$field['desc']}}</label>
+    <label class="col-md-4 control-label">{{$field['desc']}}</label>
 @endif
-    <div class="col-md-4">
+    <div class="col-md-5">
         <select class="form-control" name='{{$field['name']}}' id='cboFieldTypes'>
             <option value='0'>Select field type</option>
             @foreach ($field['value'] as $key => $value)

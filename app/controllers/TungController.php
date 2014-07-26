@@ -14,8 +14,22 @@
 class TungController extends BaseController {
 
     private $baseURL = 'setting';
-
+    
+    private function getValueFromArray($array,$key)
+    {
+        if (array_key_exists($key, $array))
+        {
+            return $array[$key];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
     function getEntities($tag) {
+        $input = Input::all();
+        
         $group = Groups::where('tag', '=', $tag)->get();
         if (count($group) != 1) {
             //invalid group
@@ -43,7 +57,7 @@ class TungController extends BaseController {
 
 
             $uifields = array(
-                UIModel::createTextEdit('Search', 'full_search'),
+                UIModel::createTextEdit('Search', 'full_search',$this->getValueFromArray($input, 'full_search')),
             );
 
             foreach ($fields as $field) {
@@ -56,8 +70,11 @@ class TungController extends BaseController {
                     case FieldTypeValue::TYPE_LISTBOX_SINGLE:
                     case FieldTypeValue::TYPE_RADIOBOX:                        
                         $value = DB::table(DBColumns::getTable('field_values'))->where('field_id', '=', $field->id)->lists('value', 'id');
-                        $value = array('0' => $field->name) + $value;
-                        array_push($uifields, UIModel::createMultipleByType($field->type_value, $field->name, 'fields_' . $field->id, $value));
+                        $value = array('0' => $field->name) + $value;        
+                        array_push($uifields, UIModel::createMultipleByType($field->type_value, 
+                                $field->name, 'fields_' . $field->id, 
+                                $value,
+                                $this->getValueFromArray($input, 'fields_' . $field->id)));
                         break;
                     case FieldTypeValue::TYPE_TEXT:
                         break;
@@ -72,7 +89,7 @@ class TungController extends BaseController {
 
 
 
-
+        //var_dump($uifields);
 
         $entities = Object::where('group_id', '=', $group->id)->select('name')->get();
 
