@@ -8,6 +8,7 @@
         </div>        
     </div>
     {{ Form::open(array('action' => 'EntityController@postEntitiesSave')) }}
+    <input type="hidden" value ="{{$pageData->group_id}}" name="group_id"/>
     <div class="portlet-body form bg-info">
         @if (isset($pageData->entities))
         <table class="table" >
