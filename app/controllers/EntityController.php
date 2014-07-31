@@ -6,8 +6,8 @@ class EntityController extends \BaseController {
     }
     public function getEntity($id) {
         $object = Object::where('id', '=', $id)->first();
-        if (! isset($object)) {
-
+        if (!isset($object)) {
+            return $this->create($id);
         }
         $entities_data = DB::table('sa__objects as obj')
             ->join('sa__object_property_values as opv', 'obj.id', '=', 'opv.object_id')
@@ -16,6 +16,7 @@ class EntityController extends \BaseController {
             ->where('obj.id', '=', $id)
             ->orderBy('fld.field_type_id', 'desc')
             ->get();
+        
         $group_id = $object->group_id;
 
         $groupFields = DB::table('sa__group_fields as sgf')
@@ -51,7 +52,8 @@ class EntityController extends \BaseController {
                 $entities[$field->field_type_code]->fields = 
                         array('name'=>$ui_field_name.'[]', 'ui' => $field->field_type_code, 'value' => $option, 'selected' =>$field_value);
             } else {
-                $entities[$field->field_type_code]->fields = array('name'=>$ui_field_name, 'ui' => $field->field_type_code, 'value'=>$object->id);
+                $sValue = count($field_value)>0?$field_value[0]:'';                
+                $entities[$field->field_type_code]->fields = array('name'=>$ui_field_name, 'ui' => $field->field_type_code, 'value'=>$sValue);
             }
             $entities[$field->field_type_code]->field_value = $field_value;
         }
@@ -60,11 +62,14 @@ class EntityController extends \BaseController {
         $pageData->entities = $entities;
         $pageData->caption = $object->name;
         $pageData->group_id = $group_id;
+        $pageData->object_id = $id;
         return View::make('entity.object-entities', array('pageData' => $pageData));
     }
     public function postEntitiesSave() {
         $input = Input::all();
         $group_id=$input['group_id'];
+        $object_id = $input['object_id'];
+        
         $groupFields = DB::table('sa__group_fields as sgf')
             ->join('sa__fields as sf', 'sgf.field_id', '=', 'sf.id')
             ->join('sa__field_types as sft', 'sf.id', '=', 'sft.id')
@@ -73,7 +78,7 @@ class EntityController extends \BaseController {
             ->get();
         $prfx_len = strlen($this->ui_field_name_prefix);
         //Remove the old object
-        EntityValues::where('object_id', $group_id)->delete();
+        EntityValues::where('object_id', $object_id)->delete();        
         foreach ($input as $name => $value) {
             if (0==strpos($this->ui_field_name_prefix, $name)) {
                 $fieldName = substr($name, $prfx_len);
@@ -81,20 +86,19 @@ class EntityController extends \BaseController {
                     if ($field->field_code==$fieldName) {
                         if (is_array($value) ) {
                             foreach($value as $svalue) {
-                                EntityValues::insert(array('object_id' => $group_id, 'field_id'=>$field->field_id, 'value' => $svalue));
+                                EntityValues::insert(array('object_id' => $object_id, 'field_id'=>$field->field_id, 'value' => $svalue));
                             }
                         }else {
-                            EntityValues::insert(array('object_id' => $group_id, 'field_id'=>$field->field_id, 'value' => $value));
+                            EntityValues::insert(array('object_id' => $object_id, 'field_id'=>$field->field_id, 'value' => $value));
                         }
                     }
                 }
             }
         }
-
+        return Redirect::to('object/object/'.$group_id);
     }
-    public function create()
-    {
-            //
+    public function create($group_id) {
+        
     }
 
 
