@@ -24,3 +24,9 @@ function submitEntityForm(button) {
     var form = $(button).closest("form")[0];
     form.submit();
 }
+
+function submitObjectAndEditEntities(button) {
+    var form = $(button).closest("form")[0];
+    $(form).attr('action', $(button).attr('link'));
+    $(form).submit();
+}

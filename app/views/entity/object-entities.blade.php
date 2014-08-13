@@ -17,14 +17,14 @@
             <tr >
                 <td style="width: 50%">{{$row->field_name}}</td>
                 <td style="width: 50%" class="td-editable" field_id="{{$row->field_id}}">
-                    <span class="show-value-cell">
+                    <span class="show-value-cell {{$pageData->hidevalue}}">
                     @if(isset($row->field_value))
                         {{implode (',', $row->field_value)}}
                     @else
                         &nbsp;
                     @endif
                     </span>
-                    <span class="show-input-value hide">
+                    <span class="show-input-value {{$pageData->hideinput}}">
                         @if (isset($row->fields))
                             @include('ui.form.'.$row->fields['ui'], array('field' => $row->fields))
                         @endif

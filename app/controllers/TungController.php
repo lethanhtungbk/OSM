@@ -14,6 +14,7 @@
 class TungController extends BaseController {
 
     private $baseURL = 'setting';
+    private $field_prefix = 'fields_';
     
     private function getValueFromArray($array,$key)
     {
@@ -28,7 +29,7 @@ class TungController extends BaseController {
     }
     
     function getEntities($tag) {
-        $input = Input::all();
+        $inputs = Input::all();
         
         $group = Groups::where('tag', '=', $tag)->get();
         if (count($group) != 1) {
@@ -57,7 +58,7 @@ class TungController extends BaseController {
 
 
             $uifields = array(
-                UIModel::createTextEdit('Search', 'full_search',$this->getValueFromArray($input, 'full_search')),
+                UIModel::createTextEdit('Search', 'full_search',$this->getValueFromArray($inputs, 'full_search')),
             );
 
             foreach ($fields as $field) {
@@ -70,11 +71,11 @@ class TungController extends BaseController {
                     case FieldTypeValue::TYPE_LISTBOX_SINGLE:
                     case FieldTypeValue::TYPE_RADIOBOX:                        
                         $value = DB::table(DBColumns::getTable('field_values'))->where('field_id', '=', $field->id)->lists('value', 'id');
-                        $value = array('0' => $field->name) + $value;        
+                        $value = array(null => $field->name) + $value;        
                         array_push($uifields, UIModel::createMultipleByType($field->type_value, 
                                 $field->name, 'fields_' . $field->id, 
                                 $value,
-                                $this->getValueFromArray($input, 'fields_' . $field->id)));
+                                $this->getValueFromArray($inputs, $this->field_prefix . $field->id)));
                         break;
                     case FieldTypeValue::TYPE_TEXT:
                         break;
@@ -86,16 +87,36 @@ class TungController extends BaseController {
 
             //var_dump($fields);
         }
-
-
-
-        //var_dump($uifields);
-
-        $entities = Object::where('group_id', '=', $group->id)->select('name')->get();
-
-
+        //$entities = Object::where('group_id', '=', $group->id)->select('name')->get();
+        $whereClauses = '';
+        //$whereClauses = 'group_id=? ';
+        $prfx_len = strlen($this->field_prefix);
+        $param = array();
+        //$param[] = $group->id;
+        foreach ($inputs as $fName=>$value) {
+            if (strlen($value)>0) {
+                if (strpos($fName, $this->field_prefix) !== false && 0==strpos($fName, $this->field_prefix) ) {                    
+                    $fieldName = substr($fName, $prfx_len);                    
+                    if ( strlen($whereClauses)>1 ) {
+                        $whereClauses = $whereClauses.' and ';
+                    }
+                    $whereClauses = $whereClauses.'(field_id=? and value=?)';
+                    $param[]=$fieldName;
+                    $param[]=$value;
+                }
+            }
+        }  
+        $entities ='';
+        if (strlen($whereClauses)>0) {
+            $entities = DB::table('sa__objects as obj')
+                ->join('sa__object_property_values as opv', 'obj.id', '=', 'opv.object_id')
+                ->whereRaw($whereClauses, $param)->select('name')->get();
+        }else {
+            $entities = Object::where('group_id', '=', $group->id)->select('name')->get();
+        }
+        var_dump($entities);
         $pageData = new PageData($this->baseURL, $tag);
-
+        
         $pageData->data->columns = DBColumns::getColumMap('entities');
         $pageData->data->records = $entities;
         $pageData->data->filters = $uifields;

@@ -23,8 +23,9 @@
         @endif      
         <div class="form-actions fluid">
             <div class="col-md-offset-3 col-md-9">
-                <button type="submit" class="btn blue">Submit</button>
-                <a type="button" class="btn default" href="{{$pageData->data->back}}">Cancel</a>
+                <button type="submit" class="btn blue">Add new</button>
+                <button type="button" class="btn blue" onclick="submitObjectAndEditEntities(this)" link="{{$pageData->data->savenext}}">Add & Edit details</button>
+                <button type="button" class="btn default" href="{{$pageData->data->back}}">Cancel</button>
             </div>
         </div>
         {{Form::close()}}

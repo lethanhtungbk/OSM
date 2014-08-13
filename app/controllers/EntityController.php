@@ -5,6 +5,18 @@ class EntityController extends \BaseController {
         $this->ui_field_name_prefix = 'input_entities_field_';
     }
     public function getEntity($id) {
+        $pageData = $this->getEntityInfo($id);
+        $pageData->hideinput=' hide ';
+        $pageData->hidevalue=' ';
+        return View::make('entity.object-entities', array('pageData' => $pageData));
+    }
+    public function getEntityNext($id) {
+        $pageData = $this->getEntityInfo($id);     
+        $pageData->hideinput='';
+        $pageData->hidevalue=' hide ';
+        return View::make('entity.object-entities', array('pageData' => $pageData));
+    }
+    private  function getEntityInfo($id) {
         $object = Object::where('id', '=', $id)->first();
         if (!isset($object)) {
             return $this->create($id);
@@ -63,7 +75,7 @@ class EntityController extends \BaseController {
         $pageData->caption = $object->name;
         $pageData->group_id = $group_id;
         $pageData->object_id = $id;
-        return View::make('entity.object-entities', array('pageData' => $pageData));
+        return $pageData;
     }
     public function postEntitiesSave() {
         $input = Input::all();
@@ -97,10 +109,6 @@ class EntityController extends \BaseController {
         }
         return Redirect::to('object/object/'.$group_id);
     }
-    public function create($group_id) {
-        
-    }
-
 
     /**
      * Store a newly created resource in storage.

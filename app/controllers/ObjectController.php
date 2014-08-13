@@ -41,6 +41,24 @@ class ObjectController extends \BaseController {
         }
         return Redirect::to('object/object/'.$input['group_id']);
     }
+    
+    public function postSaveNext() {
+        $input = Input::all();
+        $id = $input['id'];
+        $action = $input['action'];
+        
+        if ($action=='Edit') {
+            $object = Object::find($id);
+            $object->name = $input['object_name'];
+            $object->save();
+        }else if ($action=='AddNew') {
+            $object = Object::insert(
+                    array('id' => $input['id'], 'group_id'=>$input['group_id'], 'name' => $input['object_name'])
+            );
+        }
+        return Redirect::to('entity/entity/'.$id);
+    }
+    
     public function getRemove($groupId,$id) {
         $object=Object::find($id);
         if (isset($object)) {
@@ -71,6 +89,7 @@ class ObjectController extends \BaseController {
             $pageData->data->caption = 'Add new Object';
         }
         $pageData->data->save = URL::to('object/save');
+        $pageData->data->savenext = URL::to('object/save-next');
         $pageData->data->back = URL::to('object/object/');
         return View::make('object.object-details', array('pageData' => $pageData));
     }
