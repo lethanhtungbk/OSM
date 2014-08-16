@@ -110,13 +110,11 @@ class TungController extends BaseController {
         if (strlen($whereClauses)>0) {
             $entities = DB::table('sa__objects as obj')
                 ->join('sa__object_property_values as opv', 'obj.id', '=', 'opv.object_id')
-                ->whereRaw($whereClauses, $param)->select('name')->get();
+                ->whereRaw($whereClauses, $param)->select('obj.id', 'obj.group_id', 'obj.name')->get();
         }else {
             $entities = Object::where('group_id', '=', $group->id)->select('name')->get();
         }
-        var_dump($entities);
         $pageData = new PageData($this->baseURL, $tag);
-        
         $pageData->data->columns = DBColumns::getColumMap('entities');
         $pageData->data->records = $entities;
         $pageData->data->filters = $uifields;
